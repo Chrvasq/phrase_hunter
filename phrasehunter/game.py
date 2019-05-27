@@ -2,6 +2,7 @@ from .phrase import Phrase
 from random import choice
 from os import system, name, sys
 
+
 class Game:
     def __init__(self, phrases):
         self.phrases = [Phrase(phrase) for phrase in phrases]
@@ -11,9 +12,12 @@ class Game:
 
     def clear_screen(self):
         system('cls' if name == 'nt' else 'clear')
-
-    def start_game(self):
-        self.active_phrase.print_phrase()
+    
+    def welcome_message(self):
+        welcome_message = ' Phrase Hunter '
+        print('#' * (len(welcome_message) + 2))
+        print(f'#{welcome_message}#')
+        print('#' * (len(welcome_message) + 2))
 
     def end_game(self):
         self.playing = False
