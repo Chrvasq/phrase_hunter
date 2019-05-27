@@ -19,8 +19,14 @@ class Game:
         print(f'#{welcome_message}#')
         print('#' * (len(welcome_message) + 2))
 
-    def end_game(self):
-        self.playing = False
+    def win_game(self):
+        pass
+
+    def lost_game(self):
+        pass
+
+    def replay(self):
+        pass
 
     def get_user_input(self):
         user_input = ''
@@ -52,3 +58,13 @@ class Game:
             self.lives -= 1
             print(f'You have {self.lives} out of 5 lives remaining!')
             self.active_phrase.print_phrase()
+
+    def main(self):
+        self.welcome_message()
+        while self.playing:
+            self.process_guess()
+            if self.active_phrase.phrase_guessed():
+                self.win_game()
+            if self.lives == 0:
+                self.playing = False
+                self.lost_game()
