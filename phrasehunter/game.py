@@ -43,7 +43,7 @@ class Game:
             if user_input.lower() == 'y':
                 return Game().main()
             else:
-                print('Thanks for playing! See you next time!')
+                print('Thanks for playing! See you next time!\n')
                 sys.exit()
 
     def get_user_input(self):
