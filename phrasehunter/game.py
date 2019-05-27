@@ -19,11 +19,13 @@ class Game:
         print(f'#{welcome_message}#')
         print('#' * (len(welcome_message) + 2))
 
-    def win_game(self):
-        pass
+    def won_game(self):
+        print('You won!')
+        self.replay()
 
     def lost_game(self):
-        pass
+        print('You lost!')
+        self.replay()
 
     def replay(self):
         pass
@@ -61,10 +63,12 @@ class Game:
 
     def main(self):
         self.welcome_message()
+        self.active_phrase.print_phrase()
         while self.playing:
             self.process_guess()
             if self.active_phrase.phrase_guessed():
-                self.win_game()
+                self.playing = False
+                self.won_game()
             if self.lives == 0:
                 self.playing = False
                 self.lost_game()
