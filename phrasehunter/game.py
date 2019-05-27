@@ -1,6 +1,6 @@
 from .phrase import Phrase
 from random import choice
-
+from os import system, name, sys
 
 class Game:
     def __init__(self, phrases):
@@ -8,6 +8,9 @@ class Game:
         self.active_phrase = choice(self.phrases)
         self.lives = 5
         self.playing = True
+
+    def clear_screen(self):
+        system('cls' if name == 'nt' else 'clear')
 
     def start_game(self):
         self.active_phrase.print_phrase()
