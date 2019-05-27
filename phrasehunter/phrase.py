@@ -1,26 +1,24 @@
-from phrasehunter.character import Character
+from .character import Character
 
 
 class Phrase:
     def __init__(self, phrase):
-        self.phrase = [Character(char) for char in phrase]
-        self.phrase_guessed = False
+        self.phrase = [Character(letter) for letter in phrase]
 
     def print_phrase(self):
         for letter in self.phrase:
             print(letter.show(), end=' ')
+        print('\n')
 
-    def check_guess(self, guess):
-        for letter in self.phrase:
-            letter.compare_guess(guess)
-
-    def guessed_phrase(self):
-        phrase_length = len(self.phrase)
+    def phrase_guessed(self):
         count = 0
 
         for letter in self.phrase:
             if letter.was_guessed:
                 count += 1
-        if count == phrase_length:
-            self.phrase_guessed = True
-        return self.phrase_guessed
+        if count == len(self.phrase):
+            return True
+        return False
+
+    def __iter__(self):
+        yield from self.phrase
