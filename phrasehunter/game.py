@@ -1,9 +1,9 @@
-from phrasehunter.phrase import Phrase
+from .phrase import Phrase
 from random import choice
 
+
 class Game:
-    def __init__(self):
-        phrases = ['Time', 'Power', 'Soul', 'Reality', 'Space', 'Mind']
+    def __init__(self, phrases):
         self.phrases = [Phrase(phrase) for phrase in phrases]
         self.active_phrase = choice(self.phrases)
         self.lives = 5
@@ -33,13 +33,15 @@ class Game:
         else:
             return user_input
 
-    def process_turn(self):
-        guess = self.get_user_input()
-
+    def process_guess(self, guess=None):
         while guess is None:
             guess = self.get_user_input()
-
-        if not self.active_phrase.check_guess(guess):
+        if guess.lower() in [letter.original.lower() for letter
+                             in self.active_phrase]:
+            for letter in self.active_phrase:
+                letter.compare_guess(guess)
+            self.active_phrase.print_phrase()
+        else:
             self.lives -= 1
-        self.active_phrase.print_phrase()
-        self.active_phrase.guessed_phrase()
+            print(f'You have {self.lives} out of 5 lives remaining!')
+            self.active_phrase.print_phrase()
