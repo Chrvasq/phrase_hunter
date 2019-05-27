@@ -13,3 +13,6 @@ class Character:
             return self.original
         else:
             return '_'
+
+    def __str__(self):
+        return str(self.original)
