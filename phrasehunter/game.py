@@ -41,8 +41,7 @@ class Game:
             self.replay()
         else:
             if user_input.lower() == 'y':
-                game = Game()
-                game.main()
+                return Game().main()
             else:
                 print('Thanks for playing! See you next time!')
                 sys.exit()
@@ -71,19 +70,6 @@ class Game:
                 self.lives -= 1
                 print(f'You have {self.lives} out of 5 lives remaining!')
                 self.active_phrase.print_phrase()
-
-    # def process_guess(self):
-    #     # while guess is None:
-    #     guess = self.get_user_input()
-    #     if guess.lower() in [letter.original.lower() for letter
-    #                          in self.active_phrase]:
-    #         for letter in self.active_phrase:
-    #             letter.compare_guess(guess)
-    #         self.active_phrase.print_phrase()
-    #     else:
-    #         self.lives -= 1
-    #         print(f'You have {self.lives} out of 5 lives remaining!')
-    #         self.active_phrase.print_phrase()
 
     def main(self):
         self.clear_screen()
