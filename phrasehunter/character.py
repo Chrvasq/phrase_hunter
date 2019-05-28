@@ -1,3 +1,7 @@
+YELLOW = '\033[1;93m'  # Bold and yellow
+END = '\033[0m'  # Reset formatting
+
+
 class Character:
     def __init__(self, char):
         self.original = char
@@ -10,6 +14,6 @@ class Character:
 
     def show(self):
         if self.was_guessed:
-            return self.original
+            return YELLOW + self.original + END
         else:
             return '_'
