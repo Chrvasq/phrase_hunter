@@ -16,6 +16,7 @@ class Game:
         self.active_phrase = choice(self.phrases)
         self.lives = 5
         self.playing = True
+        self.already_guessed = []
 
     def clear_screen(self):
         system('cls' if name == 'nt' else 'clear')
@@ -56,10 +57,22 @@ class Game:
                       'next time!\n' + END)
                 sys.exit()
 
+    def print_previous_guesses(self):
+        print('Previous guesses: ')
+        for index, letter in enumerate(self.already_guessed):
+            if index != len(self.already_guessed) - 1:
+                print(GREEN + letter + END, end=', ')
+            else:
+                print(GREEN + letter + END, end='\n')
+        print('\n')
+
     def get_user_input(self):
         try:
             user_input = input('Guess a letter: ')
             print('\n')
+            if user_input.lower() in self.already_guessed:
+                raise ValueError(YELLOW + 'You already guessed '
+                                 f'{user_input.lower()}.\n' + END)
             if len(user_input) == 0:
                 raise ValueError(YELLOW + 'You didn\'t enter a letter. '
                                  'Please enter a letter between A-Z\n' + END)
@@ -72,6 +85,8 @@ class Game:
             print(error)
             self.get_user_input()
         else:
+            if len(self.already_guessed) > 0:
+                self.print_previous_guesses()
             if user_input.lower() in [letter.original.lower() for letter
                                       in self.active_phrase]:
                 for letter in self.active_phrase:
@@ -80,6 +95,8 @@ class Game:
             else:
                 self.lives -= 1
                 print(f'You have {self.lives} out of 5 lives remaining!\n')
+                if user_input.lower() not in self.already_guessed:
+                    self.already_guessed.append(user_input.lower())
                 self.active_phrase.print_phrase()
 
     def main(self):
