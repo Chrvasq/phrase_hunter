@@ -20,7 +20,7 @@ class Phrase:
 
     def phrase_guessed(self):
         """Checks if the entire Phrase has been guessed
-        
+
         Returns:
             bool -- Returns True if Phrase is guessed else returns False
         """
@@ -34,6 +34,5 @@ class Phrase:
         return False
 
     def __iter__(self):
-        """Makes Phrase object iterable
-        """
+        """Makes Phrase object iterable"""
         yield from self.phrase
