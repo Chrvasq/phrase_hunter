@@ -2,7 +2,9 @@ from .phrase import Phrase
 from random import choice
 from os import system, name, sys
 
+# list of phrase choices
 PHRASES = ['Time', 'Power', 'Soul', 'Reality', 'Space', 'Mind']
+# ANSI escape sequence variables to add color
 RED = '\033[1;91m'  # Bold and red
 YELLOW = '\033[1;93m'  # Bold and yellow
 GREEN = '\033[1;92m'  # Bold and green
@@ -12,6 +14,11 @@ END = '\033[0m'  # Reset formatting
 
 class Game:
     def __init__(self, phrases=PHRASES):
+        """Instantiates a Game object and takes in a list of strings
+
+        Keyword Arguments:
+            phrases {list} -- list of strings (default: {PHRASES})
+        """
         self.phrases = [Phrase(phrase) for phrase in phrases]
         self.active_phrase = choice(self.phrases)
         self.lives = 5
@@ -42,6 +49,14 @@ class Game:
         self.replay()
 
     def replay(self):
+        """Prompts user to replay and creates new instance of Game if yes
+
+        Raises:
+            ValueError: Error if user_input is not "y" or "n"
+
+        Returns:
+            object -- Game object
+        """
         try:
             user_input = input('Would you like to play again? (Y/N) > ')
             if user_input.lower() not in ['y', 'n']:
@@ -67,6 +82,15 @@ class Game:
         print('\n')
 
     def get_user_input(self):
+        """Prompts user for guess input and processes input. Handles logic for
+        checking guesses against active phrase.
+
+        Raises:
+            ValueError: Guess is in already_guessed list
+            ValueError: Empty input
+            ValueError: Guess is not a letter
+            ValueError: Guess is more than one letter
+        """
         try:
             user_input = input('Guess a letter: ')
             print('\n')
@@ -85,12 +109,12 @@ class Game:
             print(error)
             self.get_user_input()
         else:
-            if len(self.already_guessed) > 0:
+            if len(self.already_guessed) > 0:  # prints previous guesses
                 self.print_previous_guesses()
             if user_input.lower() in [letter.original.lower() for letter
                                       in self.active_phrase]:
                 for letter in self.active_phrase:
-                    letter.compare_guess(user_input)
+                    letter.compare_guess(user_input)  # checks guess
                 self.active_phrase.print_phrase()
             else:
                 self.lives -= 1
