@@ -3,7 +3,12 @@ from random import choice
 from os import system, name, sys
 
 # list of phrase choices
-PHRASES = ['Time', 'Power', 'Soul', 'Reality', 'Space', 'Mind']
+PHRASES = ['Time Stone',
+           'Power Stone',
+           'Soul Stone',
+           'Reality Stone',
+           'Space Stone',
+           'Mind Stone']
 # ANSI escape sequence variables to add color
 RED = '\033[1;91m'  # Bold and red
 YELLOW = '\033[1;93m'  # Bold and yellow
@@ -111,10 +116,11 @@ class Game:
         else:
             if len(self.already_guessed) > 0:  # prints previous guesses
                 self.print_previous_guesses()
-            if user_input.lower() in [letter.original.lower() for letter
-                                      in self.active_phrase]:
+            if user_input.lower() in [letter.original.lower() for letter in
+                                      self.active_phrase if letter != ' ']:
                 for letter in self.active_phrase:
-                    letter.compare_guess(user_input)  # checks guess
+                    if letter != ' ':
+                        letter.compare_guess(user_input)  # checks guess
                 self.active_phrase.print_phrase()
             else:
                 self.lives -= 1

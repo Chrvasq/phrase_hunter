@@ -4,18 +4,22 @@ from .character import Character
 class Phrase:
     def __init__(self, phrase):
         """Instantiates a Phrase object and takes in a list as an argument
-        
+
         Arguments:
             phrase {list} -- list of strings
         """
-        self.phrase = [Character(letter) for letter in phrase]
+        self.phrase = [Character(letter) if letter != ' '
+                       else ' ' for letter in phrase]
 
     def print_phrase(self):
         """Prints out the letters in the Phrase depending on letter is guessed
         or not
         """
         for letter in self.phrase:
-            print(letter.show(), end=' ')
+            if letter == ' ':
+                print(letter, end=' ')
+            else:
+                print(letter.show(), end=' ')
         print('\n')
 
     def phrase_guessed(self):
@@ -27,8 +31,11 @@ class Phrase:
         count = 0
 
         for letter in self.phrase:
-            if letter.was_guessed:
+            if letter == ' ':
                 count += 1
+            else:
+                if letter.was_guessed:
+                    count += 1
         if count == len(self.phrase):
             return True
         return False
